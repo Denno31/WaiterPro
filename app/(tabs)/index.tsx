@@ -1,75 +1,56 @@
-import { View, Text, StyleSheet } from "react-native";
+import { Link } from "expo-router";
 import React from "react";
-import { GestureHandlerRootView, TouchableOpacity } from "react-native-gesture-handler";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-const btns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+const navItems = [
+  {
+    title: "Create Bill",
+    route: "/create-bill",
+  },
+  {
+    title: "View Bills",
+    route: "/view-bills",
+  },
+  {
+    title: "Settings",
+    route: "/settings",
+  },
+  {
+    title: "Logout",
+    route: "/logout",
+  },
+];
 
-export default function Login() {
-  const [pin, setPin] = React.useState("");
-  const handlePress = (value: number) => {
-    if (pin.length < 4) {
-      setPin(pin + value);
-    }
-  };
+export default function Index() {
   return (
-    <View style={{ flex: 1, padding: 16, width: "100%",alignItems:"center",justifyContent:"center" }}>
-      <GestureHandlerRootView  style={styles.container}>
-        <View style={{ alignItems: "center", marginVertical: 16 }}>
-          <Text style={{ fontSize: 16, fontWeight: "600" }}>
-            Enter your PIN
-          </Text>
-        </View>
-        <View>
-          <Text style={{ textAlign: "center", fontSize: 24 }}>
-            {pin.length === 0 ? "____" : pin.length === 1 ? "*" : ""}
-            {pin.length === 2 ? "**" : ""}
-            {pin.length === 3 ? "***" : ""}
-            {pin.length === 4 ? "****" : ""}
-          </Text>
-        </View>
-        <View style={styles.buttonContainer}>
-          {btns.map((value) =>
-            value !== 0 ? (
-              <View style={styles.buttonWrapper} key={value}>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => handlePress(value)}
-                >
-                  <Text>{value}</Text>
-                </TouchableOpacity>
-              </View>
-            ) : (
-              <View style={styles.fullWidthButtonWrapper} key={value}>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => handlePress(value)}
-                >
-                  <Text>{value}</Text>
-                </TouchableOpacity>
-              </View>
-            )
-          )}
-          <View style={styles.fullWidthButtonWrapper}>
-            <TouchableOpacity
-              style={{ ...styles.button, backgroundColor: "black" }}
-            >
-              <Text style={{ color: "#fff" }}>Login</Text>
+    <GestureHandlerRootView style={styles.container}>
+      <View>
+        <Text style={styles.titleText}>Welcome to WaiterPro</Text>
+      </View>
+      <View style={{ width: "100%", marginTop: 20, gap: 10 }}>
+        {navItems.map((item) => (
+          <View style={{ width: "100%" }} key={item.title}>
+            <TouchableOpacity style={styles.button}>
+              <Text>{item.title}</Text>
             </TouchableOpacity>
           </View>
-        </View>
-      </GestureHandlerRootView>
-    </View>
+        ))}
+      </View>
+    </GestureHandlerRootView>
   );
 }
 
-// styles
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
-    elevation: 5,
-    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 50,
     padding: 16,
-   
+  },
+  titleText: {
+    fontSize: 24,
+    fontWeight: "600",
   },
   button: {
     borderRadius: 5,
@@ -78,19 +59,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: "rgb(229 231 235)",
     width: "100%",
-    height: 60,
-  },
-  buttonWrapper: {
-    width: "30%",
-  },
-  buttonContainer: {
-    flexDirection: "row", // Arrange buttons in a row
-    flexWrap: "wrap", // Allow wrapping to a new row when space is not enough
-    padding: 16,
-    justifyContent: "space-between",
-    gap: 12
-  },
-  fullWidthButtonWrapper: {
-    width: "100%", // Full width for the 0 button
+    padding: 8,
   },
 });
