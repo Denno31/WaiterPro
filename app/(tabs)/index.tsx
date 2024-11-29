@@ -1,74 +1,96 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { View, Text, StyleSheet } from "react-native";
+import React from "react";
+import { GestureHandlerRootView, TouchableOpacity } from "react-native-gesture-handler";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const btns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
-export default function HomeScreen() {
+export default function Login() {
+  const [pin, setPin] = React.useState("");
+  const handlePress = (value: number) => {
+    if (pin.length < 4) {
+      setPin(pin + value);
+    }
+  };
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View style={{ flex: 1, padding: 16, width: "100%",alignItems:"center",justifyContent:"center" }}>
+      <GestureHandlerRootView  style={styles.container}>
+        <View style={{ alignItems: "center", marginVertical: 16 }}>
+          <Text style={{ fontSize: 16, fontWeight: "600" }}>
+            Enter your PIN
+          </Text>
+        </View>
+        <View>
+          <Text style={{ textAlign: "center", fontSize: 24 }}>
+            {pin.length === 0 ? "____" : pin.length === 1 ? "*" : ""}
+            {pin.length === 2 ? "**" : ""}
+            {pin.length === 3 ? "***" : ""}
+            {pin.length === 4 ? "****" : ""}
+          </Text>
+        </View>
+        <View style={styles.buttonContainer}>
+          {btns.map((value) =>
+            value !== 0 ? (
+              <View style={styles.buttonWrapper} key={value}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => handlePress(value)}
+                >
+                  <Text>{value}</Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View style={styles.fullWidthButtonWrapper} key={value}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => handlePress(value)}
+                >
+                  <Text>{value}</Text>
+                </TouchableOpacity>
+              </View>
+            )
+          )}
+          <View style={styles.fullWidthButtonWrapper}>
+            <TouchableOpacity
+              style={{ ...styles.button, backgroundColor: "black" }}
+            >
+              <Text style={{ color: "#fff" }}>Login</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </GestureHandlerRootView>
+    </View>
   );
 }
 
+// styles
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    backgroundColor: "#fff",
+    elevation: 5,
+    borderRadius: 10,
+    padding: 16,
+   
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  button: {
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: "rgb(229 231 235)",
+    width: "100%",
+    height: 60,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  buttonWrapper: {
+    width: "30%",
+  },
+  buttonContainer: {
+    flexDirection: "row", // Arrange buttons in a row
+    flexWrap: "wrap", // Allow wrapping to a new row when space is not enough
+    padding: 16,
+    justifyContent: "space-between",
+    gap: 12
+  },
+  fullWidthButtonWrapper: {
+    width: "100%", // Full width for the 0 button
   },
 });
