@@ -37,18 +37,18 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="create-bill"
         options={{
-          title: "Explore",
+          title: "Create Bill",
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="paperplane.fill" color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="login"
+        name="AddItemsToBill"
         options={{
-          title: "Login",
+          title: "Add Items to Bill",
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="paperplane.fill" color={color} />
           ),

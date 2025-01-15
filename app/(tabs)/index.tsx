@@ -1,64 +1,76 @@
-import { Link } from "expo-router";
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-const navItems = [
-  {
-    title: "Create Bill",
-    route: "/create-bill",
-  },
-  {
-    title: "View Bills",
-    route: "/view-bills",
-  },
-  {
-    title: "Settings",
-    route: "/settings",
-  },
-  {
-    title: "Logout",
-    route: "/logout",
-  },
+// Sample quick stats and navigation buttons
+const quickStats = {
+  activeBills: 5,
+  totalSalesToday: 150.75,
+  pendingOrders: 3,
+};
+
+const menuItems = [
+  { id: 1, name: "Add Items to Bill", navigateTo: "AddItemsToBill" },
+  { id: 2, name: "View Bills", navigateTo: "BillsPage" },
+  { id: 3, name: "Create New Order", navigateTo: "CreateOrder" },
+  { id: 4, name: "Reports", navigateTo: "ReportsPage" },
 ];
 
-export default function Index() {
+export default function HomePage({ navigation }: any) {
+  const renderMenuItem = ({
+    item,
+  }: {
+    item: { name: string; navigateTo: string };
+  }) => (
+    <TouchableOpacity
+      onPress={() => navigation.navigate(item.navigateTo)}
+      className="p-4 bg-blue-500 rounded-lg shadow-md mb-4"
+    >
+      <Text className="text-lg font-semibold text-white text-center">
+        {item.name}
+      </Text>
+    </TouchableOpacity>
+  );
+
   return (
-    <GestureHandlerRootView style={styles.container}>
-      <View>
-        <Text style={styles.titleText}>Welcome to WaiterPro</Text>
+    <SafeAreaView className="flex-1 bg-gray-50 p-6">
+      {/* Welcome message */}
+      <Text className="text-2xl font-bold text-center mb-6">
+        Welcome to the Dashboard
+      </Text>
+
+      {/* Quick Stats */}
+      <View className="mb-6 flex-row justify-between">
+        <View className="bg-white p-4 rounded-lg shadow-md w-1/3">
+          <Text className="text-xl font-semibold text-center">
+            Active Bills
+          </Text>
+          <Text className="text-2xl font-bold text-center text-blue-500">
+            {quickStats.activeBills}
+          </Text>
+        </View>
+        <View className="bg-white p-4 rounded-lg shadow-md w-1/3">
+          <Text className="text-xl font-semibold text-center">Sales Today</Text>
+          <Text className="text-2xl font-bold text-center text-green-500">
+            ${quickStats.totalSalesToday.toFixed(2)}
+          </Text>
+        </View>
+        <View className="bg-white p-4 rounded-lg shadow-md w-1/3">
+          <Text className="text-xl font-semibold text-center">
+            Pending Orders
+          </Text>
+          <Text className="text-2xl font-bold text-center text-red-500">
+            {quickStats.pendingOrders}
+          </Text>
+        </View>
       </View>
-      <View style={{ width: "100%", marginTop: 20, gap: 10 }}>
-        {navItems.map((item) => (
-          <View style={{ width: "100%" }} key={item.title}>
-            <TouchableOpacity style={styles.button}>
-              <Text>{item.title}</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </View>
-    </GestureHandlerRootView>
+
+      {/* Menu items for navigation */}
+      <FlatList
+        data={menuItems}
+        renderItem={renderMenuItem}
+        keyExtractor={(item) => item.id.toString()}
+      />
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 50,
-    padding: 16,
-  },
-  titleText: {
-    fontSize: 24,
-    fontWeight: "600",
-  },
-  button: {
-    borderRadius: 5,
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 2,
-    borderColor: "rgb(229 231 235)",
-    width: "100%",
-    padding: 8,
-  },
-});
