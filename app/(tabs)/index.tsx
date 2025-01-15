@@ -39,32 +39,6 @@ export default function HomePage({ navigation }: any) {
         Welcome to the Dashboard
       </Text>
 
-      {/* Quick Stats */}
-      <View className="mb-6 flex-row justify-between">
-        <View className="bg-white p-4 rounded-lg shadow-md w-1/3">
-          <Text className="text-xl font-semibold text-center">
-            Active Bills
-          </Text>
-          <Text className="text-2xl font-bold text-center text-blue-500">
-            {quickStats.activeBills}
-          </Text>
-        </View>
-        <View className="bg-white p-4 rounded-lg shadow-md w-1/3">
-          <Text className="text-xl font-semibold text-center">Sales Today</Text>
-          <Text className="text-2xl font-bold text-center text-green-500">
-            ${quickStats.totalSalesToday.toFixed(2)}
-          </Text>
-        </View>
-        <View className="bg-white p-4 rounded-lg shadow-md w-1/3">
-          <Text className="text-xl font-semibold text-center">
-            Pending Orders
-          </Text>
-          <Text className="text-2xl font-bold text-center text-red-500">
-            {quickStats.pendingOrders}
-          </Text>
-        </View>
-      </View>
-
       {/* Menu items for navigation */}
       <FlatList
         data={menuItems}
