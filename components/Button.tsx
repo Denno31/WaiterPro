@@ -13,7 +13,9 @@ const Button = ({ handlePress, text, buttonClasses, textClasses }: Props) => {
   return (
     <TouchableOpacity
       onPress={handlePress}
-      className={classNames(`p-4 rounded-lg  ${buttonClasses}`)}
+      className={classNames(
+        `p-4 rounded-lg bg-secondary-flow  ${buttonClasses}`
+      )}
     >
       <Text className={`text-lg font-semibold text-center  ${textClasses}`}>
         {text}

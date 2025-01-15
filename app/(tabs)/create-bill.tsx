@@ -1,3 +1,5 @@
+import Button from "@/components/Button";
+import classNames from "classnames";
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, FlatList, Alert } from "react-native";
@@ -53,27 +55,25 @@ export default function CreateBill() {
         Create a New Bill
       </Text>
       <View className="mb-6">
-        <TouchableOpacity
-          onPress={() => setSelectedOption("Take Away")}
-          className={`p-4 rounded-lg mb-4 ${
-            selectedOption === "Take Away" ? "bg-secondary-flow" : "bg-gray-800"
-          }`}
-        >
-          <Text className="text-lg font-semibold text-center text-white">
-            Take Away
-          </Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={() => setSelectedOption("Dine In")}
-          className={`p-4 rounded-lg ${
-            selectedOption === "Dine In" ? "bg-secondary-flow" : "bg-gray-800"
-          }`}
-        >
-          <Text className="text-lg font-semibold text-center text-white">
-            Dine In
-          </Text>
-        </TouchableOpacity>
+        <Button
+          handlePress={() => setSelectedOption("Take Away")}
+          text="Take Away"
+          buttonClasses={classNames("bg-primary mb-4", {
+            "bg-secondary-flow": selectedOption === "Take Away",
+            "bg-gray-800": selectedOption !== "Take Away",
+          })}
+          textClasses="text-white"
+        />
+        {/* use button Component */}
+        <Button
+          handlePress={() => setSelectedOption("Dine In")}
+          buttonClasses={classNames("bg-primary mb-4", {
+            "bg-secondary-flow": selectedOption === "Dine In",
+            "bg-gray-800": selectedOption !== "Dine In",
+          })}
+          text="Dine In"
+          textClasses="text-lg font-semibold text-center text-white"
+        />
       </View>
 
       {selectedOption === "Dine In" && (
@@ -85,14 +85,13 @@ export default function CreateBill() {
         />
       )}
 
-      <TouchableOpacity
-        onPress={handleProceed}
-        className="p-4 rounded-lg bg-primary"
-      >
-        <Text className="text-lg font-bold text-center text-white">
-          Proceed
-        </Text>
-      </TouchableOpacity>
+      <Button
+        text="Proceed"
+        handlePress={handleProceed}
+        buttonClasses="bg-primary"
+        textClasses="text-lg font-bold text-center text-white"
+      />
+
       <StatusBar style="light" />
     </SafeAreaView>
   );
