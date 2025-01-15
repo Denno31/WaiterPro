@@ -1,3 +1,4 @@
+import { Link } from "expo-router";
 import React from "react";
 import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -12,7 +13,7 @@ const quickStats = {
 const menuItems = [
   { id: 1, name: "Add Items to Bill", navigateTo: "AddItemsToBill" },
   { id: 2, name: "View Bills", navigateTo: "BillsPage" },
-  { id: 3, name: "Create New Order", navigateTo: "CreateOrder" },
+  { id: 3, name: "Create New Order", navigateTo: "/create-bill" },
   { id: 4, name: "Reports", navigateTo: "ReportsPage" },
 ];
 
@@ -22,13 +23,13 @@ export default function HomePage({ navigation }: any) {
   }: {
     item: { name: string; navigateTo: string };
   }) => (
-    <TouchableOpacity
-      onPress={() => navigation.navigate(item.navigateTo)}
-      className="p-4 bg-blue-500 rounded-lg shadow-md mb-4"
-    >
-      <Text className="text-lg font-semibold text-white text-center">
+    <TouchableOpacity className="p-4 bg-blue-500 rounded-lg shadow-md mb-4">
+      <Link
+        href={item.navigateTo as any}
+        className="text-lg font-semibold text-white text-center"
+      >
         {item.name}
-      </Text>
+      </Link>
     </TouchableOpacity>
   );
 
