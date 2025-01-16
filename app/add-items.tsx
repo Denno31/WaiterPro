@@ -50,7 +50,9 @@ export default function AddItemsToBill() {
       try {
         const itemSourcesWithGroups = await getItemSources(1001);
         setItemSourceWithGroups(
-          itemSourcesWithGroups.concat(itemSourceWithGroups)
+          itemSourcesWithGroups
+            .concat(itemSourceWithGroups)
+            .concat(itemSourceWithGroups)
         );
       } catch (error) {
         console.log(error);
@@ -81,7 +83,7 @@ export default function AddItemsToBill() {
                 data={itemSourceWithGroups}
                 renderItem={({ item }) => (
                   <TouchableOpacity className="px-2 py-4 rounded-lg shadow-md mb-4 bg-gray-800 border border-background mt-6 mr-2">
-                    <Text className="text-sm font-semibold text-buttonText">
+                    <Text className="text-xs font-semibold text-buttonText">
                       {item.itemSource}
                     </Text>
                   </TouchableOpacity>
