@@ -1,3 +1,4 @@
+import { createBill } from "@/api/api";
 import Button from "@/components/Button";
 import classNames from "classnames";
 import { StatusBar } from "expo-status-bar";
@@ -21,11 +22,25 @@ export default function CreateBill() {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [selectedTable, setSelectedTable] = useState<number | null>(null);
 
-  const handleProceed = () => {
+  const handleProceed = async () => {
     if (selectedOption === "Take Away") {
+      const bill = {
+        salePoint: "Grand Oasis",
+        tableNo: "EAT-IN",
+        waiterName: "John Doe",
+      };
+      const res = await createBill(bill);
+      console.log(res);
       Alert.alert("Proceeding", "You selected Take Away.");
       // Navigate to item selection screen
     } else if (selectedTable) {
+      const bill = {
+        salePoint: "Grand Oasis",
+        tableNo: 1,
+        waiterName: "John Doe",
+      };
+      const res = await createBill(bill);
+      console.log(res);
       Alert.alert(
         "Proceeding",
         `You selected ${tables.find((t) => t.id === selectedTable)?.name}.`
