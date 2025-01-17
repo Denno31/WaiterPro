@@ -1,6 +1,6 @@
 import { Bill } from "@/types/types";
 
-const baseUrl = "http://192.168.68.111:3000";
+const baseUrl = "http://192.168.0.103:3000";
 
 export const fetchBills = async () => {
   try {
