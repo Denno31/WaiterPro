@@ -36,6 +36,7 @@ export default function AddItemsToBill() {
   );
 
   const [items, setItems] = useState<Item[]>([]);
+  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
 
   const handleSelectItemSource = (itemSource: ItemSourceWithGroups) => {
     setSelectedItemSource(itemSource);
@@ -51,6 +52,13 @@ export default function AddItemsToBill() {
   const fetchItems = async (group: string) => {
     const fetchedItems = await getMenuItems(group);
     setItems(fetchedItems);
+  };
+
+  const handleItemPress = (item: Item) => {
+    // set active item
+    setSelectedItem(item);
+
+    // open bottom sheet
   };
 
   const handleOpenSheet = () => {
