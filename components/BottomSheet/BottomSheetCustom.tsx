@@ -22,7 +22,10 @@ const BottomSheetCustom = ({
       <BottomSheet
         index={-1}
         ref={sheetRef}
-        onClose={() => handleSetIsOpen(false)}
+        onClose={() => {
+          console.log("closed");
+          handleSetIsOpen(false);
+        }}
         snapPoints={snapPoint}
         enablePanDownToClose={true}
       >

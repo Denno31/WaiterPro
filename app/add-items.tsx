@@ -66,6 +66,12 @@ export default function AddItemsToBill() {
   };
 
   useEffect(() => {
+    if (selectedItem) {
+      handleOpenSheet();
+    }
+  }, [selectedItem]);
+
+  useEffect(() => {
     if (selectedItemGroup) {
       fetchItems(selectedItemGroup.itemGroup);
     }
@@ -162,13 +168,16 @@ export default function AddItemsToBill() {
               </View>
             </View>
           </View>
-          <MenuItemsFlatList items={items} handleOpenSheet={handleOpenSheet} />
+          <MenuItemsFlatList items={items} handleItemPress={handleItemPress} />
         </View>
-        <AddItemToBillBottomSheet
-          isOpen
-          handleSetIsOpen={() => {}}
-          sheetRef={sheetRef}
-        />
+        {selectedItem && (
+          <AddItemToBillBottomSheet
+            isOpen
+            handleSetIsOpen={() => {}}
+            sheetRef={sheetRef}
+            item={selectedItem}
+          />
+        )}
       </GestureHandlerRootView>
     </SafeAreaView>
   );

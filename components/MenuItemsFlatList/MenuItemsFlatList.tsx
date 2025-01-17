@@ -5,17 +5,17 @@ import { Item } from "@/types/types";
 
 interface Props {
   items: Item[];
-  handleOpenSheet: () => void;
+  handleItemPress: (item: Item) => void;
 }
 
-const MenuItemsFlatList = ({ items, handleOpenSheet }: Props) => {
+const MenuItemsFlatList = ({ items, handleItemPress }: Props) => {
   return (
     <FlatList
       data={items}
       numColumns={2} // Grid with 2 columns
       renderItem={({ item }) => (
         <TouchableOpacity
-          onPress={handleOpenSheet}
+          onPress={() => handleItemPress(item)}
           className="flex-1 m-2 p-4 bg-gray-800 rounded-xl shadow-lg items-center"
         >
           <MaterialCommunityIcons
