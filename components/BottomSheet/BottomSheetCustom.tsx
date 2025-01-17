@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import React, { useRef, useState } from "react";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 
@@ -8,9 +8,15 @@ interface Props {
   isOpen: boolean;
   handleSetIsOpen: (isOpened: boolean) => void;
   sheetRef: React.RefObject<BottomSheet>;
+  children: React.ReactNode;
 }
 
-const BottomSheetCustom = ({ isOpen, handleSetIsOpen, sheetRef }: Props) => {
+const BottomSheetCustom = ({
+  isOpen,
+  handleSetIsOpen,
+  sheetRef,
+  children,
+}: Props) => {
   return (
     <>
       <BottomSheet
@@ -20,9 +26,7 @@ const BottomSheetCustom = ({ isOpen, handleSetIsOpen, sheetRef }: Props) => {
         snapPoints={snapPoint}
         enablePanDownToClose={true}
       >
-        <BottomSheetView>
-          <Text>Bottom Sheet</Text>
-        </BottomSheetView>
+        <BottomSheetView>{children}</BottomSheetView>
       </BottomSheet>
     </>
   );

@@ -1,5 +1,8 @@
 import { getItemSources, getMenuItems } from "@/api/api";
+import AddItemToBillBottomSheet from "@/components/AddItemToBillBottomSheet/AddItemToBillBottomSheet";
 import BottomSheetCustom from "@/components/BottomSheet/BottomSheetCustom";
+import MenuItemsFlatList from "@/components/MenuItemsFlatList/MenuItemsFlatList";
+import { Item, ItemGroup, ItemSourceWithGroups } from "@/types/types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomSheet from "@gorhom/bottom-sheet";
 import classNames from "classnames";
@@ -17,23 +20,6 @@ const darkColors = {
   background: "#2C3E50",
   buttonText: "#ECF0F1",
   border: "#34495E",
-};
-
-type ItemGroup = {
-  itemGroup: string;
-  id: number;
-};
-
-type ItemSourceWithGroups = {
-  itemSource: string;
-  id: number;
-  groups: ItemGroup[];
-};
-
-type Item = {
-  id: number;
-  name: string;
-  price: number;
 };
 
 export default function AddItemsToBill() {
@@ -59,11 +45,10 @@ export default function AddItemsToBill() {
 
   const handleSelectItemGroup = (itemGroup: ItemGroup) => {
     setSelectedItemGroup(itemGroup);
-    fetchItems(itemGroup.itemGroup); // Fetch items for the selected group
+    fetchItems(itemGroup.itemGroup);
   };
 
   const fetchItems = async (group: string) => {
-    // Simulate fetching items for the selected group
     const fetchedItems = await getMenuItems(group);
     setItems(fetchedItems);
   };
@@ -169,38 +154,14 @@ export default function AddItemsToBill() {
               </View>
             </View>
           </View>
-          <FlatList
-            data={items}
-            numColumns={2} // Grid with 2 columns
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={handleOpenSheet}
-                className="flex-1 m-2 p-4 bg-gray-800 rounded-xl shadow-lg items-center"
-              >
-                <MaterialCommunityIcons
-                  name="glass-cocktail"
-                  size={36}
-                  color="#E2E2D5"
-                />
-                <Text
-                  className="text-buttonText text-sm font-semibold mt-2"
-                  ellipsizeMode="tail"
-                >
-                  {item.name}
-                </Text>
-                <Text className="text-gray-500 text-xs">KES: {item.price}</Text>
-              </TouchableOpacity>
-            )}
-            keyExtractor={(item) => item.id.toString()}
-          />
+          <MenuItemsFlatList items={items} handleOpenSheet={handleOpenSheet} />
         </View>
-        <BottomSheetCustom
-          sheetRef={sheetRef}
+        <AddItemToBillBottomSheet
           isOpen
           handleSetIsOpen={() => {}}
+          sheetRef={sheetRef}
         />
       </GestureHandlerRootView>
-      {/* <BottomSheetCustom /> */}
     </SafeAreaView>
   );
 }
