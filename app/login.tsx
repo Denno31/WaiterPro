@@ -6,18 +6,20 @@ import {
   TouchableOpacity,
 } from "react-native-gesture-handler";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import classNames from "classnames";
 
-const btns = [1, 2, 3, 4, 5, 6, 7, 8, 9, "", 0, "x"];
+const btns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 11];
 
 export default function Login() {
   const [pin, setPin] = useState("");
 
-  const handlePress = (value: number | string) => {
-    if (value === "x") {
+  const handlePress = (value: number) => {
+    if (value === 11) {
       setPin(pin.slice(0, -1));
       return;
     }
-    if (pin.length < 4) {
+    if (value > 9) return;
+    if (pin.length < 8) {
       setPin(pin + value);
     }
   };
@@ -37,7 +39,7 @@ export default function Login() {
         <View className="mb-8">
           <Text className="text-white text-2xl text-center tracking-widest">
             {pin
-              .padEnd(4, "_")
+              .padEnd(8, "_")
               .replace(/./g, (char, idx) => (idx < pin.length ? "*" : char))}
           </Text>
         </View>
@@ -47,18 +49,23 @@ export default function Login() {
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() => handlePress(item)}
-              className="p-8 bg-gray-900 rounded-lg m-1 "
+              className={classNames(
+                "p-8 bg-gray-900 rounded-lg m-1 box-border",
+                {
+                  "bg-primary": item === 10,
+                }
+              )}
             >
-              {typeof item === "number" ? (
+              {item <= 9 ? (
                 <Text className="text-white text-lg font-semibold text-center">
                   {item}
                 </Text>
               ) : (
-                <Text className="text-white text-lg font-semibold text-center">
+                <Text className="text-white text-lg font-semibold text-center box-border">
                   <MaterialIcons
                     size={12}
                     name={`${
-                      item === "" ? "center-focus-strong" : "backspace"
+                      item === 10 ? "center-focus-strong" : "backspace"
                     }`}
                     color="white"
                   />
