@@ -15,6 +15,7 @@ const menuItems = [
   { id: 2, name: "View Bills", navigateTo: "BillsPage" },
   { id: 3, name: "Create New Order", navigateTo: "/create-bill" },
   { id: 4, name: "Reports", navigateTo: "ReportsPage" },
+  { id: 5, name: "Login", navigateTo: "/login" },
 ];
 
 export default function HomePage({ navigation }: any) {
