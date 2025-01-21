@@ -1,5 +1,6 @@
+import { AuthContext } from "@/context/Auth";
 import { Link } from "expo-router";
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -19,6 +20,7 @@ const menuItems = [
 ];
 
 export default function HomePage({ navigation }: any) {
+  const { logout } = useContext(AuthContext);
   const renderMenuItem = ({
     item,
   }: {
@@ -40,7 +42,14 @@ export default function HomePage({ navigation }: any) {
       <Text className="text-2xl font-bold text-center mb-6">
         Welcome to the Dashboard
       </Text>
-
+      <TouchableOpacity
+        onPress={logout}
+        className="p-4 bg-blue-500 rounded-lg shadow-md mb-4"
+      >
+        <Text className="text-lg font-semibold text-white text-center">
+          Logout
+        </Text>
+      </TouchableOpacity>
       {/* Menu items for navigation */}
       <FlatList
         data={menuItems}

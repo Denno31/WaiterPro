@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { View, Text, Alert } from "react-native";
 import {
   FlatList,
   GestureHandlerRootView,
@@ -7,13 +7,29 @@ import {
 } from "react-native-gesture-handler";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import classNames from "classnames";
+import { login } from "@/api/api";
+import { AuthContext } from "@/context/Auth";
+import { useRouter } from "expo-router";
 
 const btns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 11];
 
 export default function Login() {
+  const router = useRouter();
+  const { handleLogin, isLoggedIn } = useContext(AuthContext);
   const [pin, setPin] = useState("");
 
-  const handlePress = (value: number) => {
+  const handlePress = async (value: number) => {
+    if (value === 10) {
+      console.log("Login");
+      try {
+        await handleLogin(pin);
+        router.replace("/");
+      } catch (error) {
+        Alert.alert("Error", String(error));
+      }
+
+      return;
+    }
     if (value === 11) {
       setPin(pin.slice(0, -1));
       return;
@@ -23,6 +39,12 @@ export default function Login() {
       setPin(pin + value);
     }
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.replace("/");
+    }
+  }, [isLoggedIn]);
 
   return (
     <GestureHandlerRootView className="flex-1 bg-gray-800 justify-center items-center">

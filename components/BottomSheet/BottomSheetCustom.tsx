@@ -17,6 +17,7 @@ const BottomSheetCustom = ({
   sheetRef,
   children,
 }: Props) => {
+  console.log("isOpen", isOpen);
   return (
     <>
       <BottomSheet

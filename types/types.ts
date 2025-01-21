@@ -19,3 +19,9 @@ export type Item = {
   name: string;
   price: number;
 };
+
+export interface Waiter {
+  name: string;
+  waiterNo: number;
+  activeText: "NO" | "YES";
+}
