@@ -12,7 +12,7 @@ const quickStats = {
 };
 
 const menuItems = [
-  { id: 1, name: "Add Items to Bill", navigateTo: "/add-items" },
+  { id: 1, name: "Add Items to Bill", navigateTo: "/add-items/5" },
   { id: 2, name: "View Bills", navigateTo: "BillsPage" },
   { id: 3, name: "Create New Order", navigateTo: "/create-bill" },
   { id: 4, name: "Reports", navigateTo: "ReportsPage" },

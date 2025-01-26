@@ -1,3 +1,4 @@
+// Import necessary components
 import { getItemSources, getMenuItems } from "@/api/api";
 import AddItemToBillBottomSheet from "@/components/AddItemToBillBottomSheet/AddItemToBillBottomSheet";
 import BottomSheetCustom from "@/components/BottomSheet/BottomSheetCustom";
@@ -5,7 +6,7 @@ import MenuItemsFlatList from "@/components/MenuItemsFlatList/MenuItemsFlatList"
 import { Item, ItemGroup, ItemSourceWithGroups } from "@/types/types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomSheet from "@gorhom/bottom-sheet";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 import { View, Text, TouchableOpacity, FlatList } from "react-native";
@@ -24,6 +25,8 @@ const darkColors = {
 };
 
 export default function AddItemsToBill() {
+  const { params } = useRoute();
+  const { billId } = params as { billId: string }; // Get billId and cartItemCount from route params
   const sheetRef = useRef<BottomSheet>(null);
   const [itemSourceWithGroups, setItemSourceWithGroups] = useState<
     ItemSourceWithGroups[]
@@ -42,7 +45,6 @@ export default function AddItemsToBill() {
 
   const handleSelectItemSource = (itemSource: ItemSourceWithGroups) => {
     setSelectedItemSource(itemSource);
-    console.log(itemSource.groups[0]);
     setSelectedItemGroup(itemSource.groups[0]); // Select the first group
   };
 
@@ -101,10 +103,7 @@ export default function AddItemsToBill() {
     React.useCallback(() => {
       // Do something when the screen is focused
       return () => {
-        console.log("left");
         setIsBottomSheetOpen(false);
-        // Do something when the screen is unfocused
-        // Useful for cleanup functions
       };
     }, [])
   );
@@ -115,6 +114,28 @@ export default function AddItemsToBill() {
       edges={["left", "right", "bottom"]}
     >
       <GestureHandlerRootView>
+        {/* Header Section */}
+        <View className="p-4 flex-row justify-between items-center bg-gray-800">
+          {/* Bill ID */}
+          <Text className="text-white text-lg font-semibold">
+            Bill #{billId}
+          </Text>
+          {/* Cart Icon */}
+          <TouchableOpacity
+            className="flex-row items-center bg-primary px-3 py-2 rounded-full"
+            onPress={() => {
+              console.log("Cart Icon Pressed");
+            }}
+          >
+            <MaterialCommunityIcons
+              name="cart"
+              size={20}
+              color={darkColors.buttonText}
+            />
+            <Text className="ml-2 text-buttonText font-semibold">{0}</Text>
+          </TouchableOpacity>
+        </View>
+
         {/* Section for Item Sources */}
         <View className="p-4">
           <Text className="text-white text-lg font-semibold">
@@ -141,6 +162,8 @@ export default function AddItemsToBill() {
             keyExtractor={(item) => item.id.toString()}
           />
         </View>
+
+        {/* Section for Item Groups */}
         <View className="p-4">
           <Text className="text-white text-lg font-semibold">
             Select Item Group
@@ -166,6 +189,7 @@ export default function AddItemsToBill() {
             keyExtractor={(item) => item.id.toString()}
           />
         </View>
+
         {/* Section for Items */}
         <View className="p-4 flex-1 bg-background">
           <View className="flex-row justify-between items-center mb-4">

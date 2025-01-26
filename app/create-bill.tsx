@@ -4,12 +4,14 @@ import { AuthContext } from "@/context/Auth";
 import { Table } from "@/types/types";
 import { AntDesign } from "@expo/vector-icons";
 import classNames from "classnames";
+import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import React, { useContext, useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, FlatList, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function CreateBill() {
+  const router = useRouter();
   const { user } = useContext(AuthContext);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [selectedTable, setSelectedTable] = useState<number | null>(null);
@@ -39,15 +41,17 @@ export default function CreateBill() {
     if (selectedOption === "Take Away") {
       const res = await createBill(billData);
       console.log(res);
-      Alert.alert("Proceeding", "You selected Take Away.");
+      router.push(`/add-items/${res.billNo}` as any);
+      // Alert.alert("Proceeding", "You selected Take Away.");
       // Navigate to item selection screen
     } else if (selectedTable) {
       const res = await createBill(billData);
-      console.log(res);
-      Alert.alert(
-        "Proceeding",
-        `You selected ${tables.find((t) => t.id === selectedTable)?.name}.`
-      );
+      router.push(`/add-items/${res.billNo}` as any);
+      // console.log(res);
+      // Alert.alert(
+      //   "Proceeding",
+      //   `You selected ${tables.find((t) => t.id === selectedTable)?.name}.`
+      // );
       // Navigate to item selection screen
     } else {
       Alert.alert("Error", "Please select a table or choose Take Away.");
