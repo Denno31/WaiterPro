@@ -5,28 +5,18 @@ import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 const snapPoint = ["80%", "80%"];
 
 interface Props {
-  isOpen: boolean;
-  handleSetIsOpen: (isOpened: boolean) => void;
+  handleClose: () => void;
   sheetRef: React.RefObject<BottomSheet>;
   children: React.ReactNode;
 }
 
-const BottomSheetCustom = ({
-  isOpen,
-  handleSetIsOpen,
-  sheetRef,
-  children,
-}: Props) => {
-  console.log("isOpen", isOpen);
+const BottomSheetCustom = ({ sheetRef, children, handleClose }: Props) => {
   return (
     <>
       <BottomSheet
         index={-1}
         ref={sheetRef}
-        onClose={() => {
-          console.log("closed");
-          handleSetIsOpen(false);
-        }}
+        onClose={handleClose}
         snapPoints={snapPoint}
         enablePanDownToClose={true}
       >

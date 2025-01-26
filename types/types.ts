@@ -25,3 +25,8 @@ export interface Waiter {
   waiterNo: number;
   activeText: "NO" | "YES";
 }
+
+export interface Table {
+  id: number;
+  name: string;
+}

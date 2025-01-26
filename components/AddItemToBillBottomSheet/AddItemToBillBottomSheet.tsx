@@ -6,34 +6,29 @@ import { Item } from "@/types/types";
 
 interface Props {
   sheetRef: React.RefObject<BottomSheet>;
-  handleSetIsOpen: (isOpened: boolean) => void;
-  isOpen: boolean;
-  item: Item;
+  handleClose: () => void;
+  item: Item | null;
 }
 
 const AddItemToBillBottomSheet = ({
-  handleSetIsOpen,
+  handleClose,
   sheetRef,
-  isOpen,
+
   item,
 }: Props) => {
   return (
-    <BottomSheetCustom
-      sheetRef={sheetRef}
-      isOpen={isOpen}
-      handleSetIsOpen={() => {}}
-    >
+    <BottomSheetCustom sheetRef={sheetRef} handleClose={handleClose}>
       <View className="p-4">
         <View className="mb-4">
           {/* Item Name */}
-          <Text className="text-lg font-semibold">{item.name}</Text>
+          <Text className="text-lg font-semibold">{item?.name}</Text>
         </View>
         <View className="items-center mb-4">
           <Text className="text-lg font-semibold">Add Item</Text>
         </View>
         <View className="flex-row justify-between items-center mb-4">
           <Text>Price:</Text>
-          <Text>KES:{item.price}</Text>
+          <Text>KES:{item?.price}</Text>
         </View>
         <View className="flex-row items-center justify-center mb-6 space-x-4">
           <TouchableOpacity className="bg-gray-700 p-3 rounded-lg">

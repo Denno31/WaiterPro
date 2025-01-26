@@ -5,6 +5,7 @@ import MenuItemsFlatList from "@/components/MenuItemsFlatList/MenuItemsFlatList"
 import { Item, ItemGroup, ItemSourceWithGroups } from "@/types/types";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import BottomSheet from "@gorhom/bottom-sheet";
+import { useFocusEffect } from "@react-navigation/native";
 import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 import { View, Text, TouchableOpacity, FlatList } from "react-native";
@@ -37,6 +38,7 @@ export default function AddItemsToBill() {
 
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   const handleSelectItemSource = (itemSource: ItemSourceWithGroups) => {
     setSelectedItemSource(itemSource);
@@ -57,6 +59,7 @@ export default function AddItemsToBill() {
   const handleItemPress = (item: Item) => {
     // set active item
     setSelectedItem(item);
+    setIsBottomSheetOpen(true);
 
     // open bottom sheet
   };
@@ -66,10 +69,10 @@ export default function AddItemsToBill() {
   };
 
   useEffect(() => {
-    if (selectedItem) {
+    if (isBottomSheetOpen) {
       handleOpenSheet();
     }
-  }, [selectedItem]);
+  }, [isBottomSheetOpen]);
 
   useEffect(() => {
     if (selectedItemGroup) {
@@ -93,6 +96,18 @@ export default function AddItemsToBill() {
     };
     fetchItemSources();
   }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      return () => {
+        console.log("left");
+        setIsBottomSheetOpen(false);
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, [])
+  );
 
   return (
     <SafeAreaView
@@ -170,14 +185,14 @@ export default function AddItemsToBill() {
           </View>
           <MenuItemsFlatList items={items} handleItemPress={handleItemPress} />
         </View>
-        {selectedItem && (
-          <AddItemToBillBottomSheet
-            isOpen
-            handleSetIsOpen={() => {}}
-            sheetRef={sheetRef}
-            item={selectedItem}
-          />
-        )}
+
+        <AddItemToBillBottomSheet
+          handleClose={() => {
+            setIsBottomSheetOpen(false);
+          }}
+          sheetRef={sheetRef}
+          item={selectedItem}
+        />
       </GestureHandlerRootView>
     </SafeAreaView>
   );

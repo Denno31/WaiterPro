@@ -7,14 +7,25 @@ interface Props {
   handlePress: () => void;
   buttonClasses?: string;
   textClasses?: string;
+  loading?: boolean;
 }
 
-const Button = ({ handlePress, text, buttonClasses, textClasses }: Props) => {
+const Button = ({
+  handlePress,
+  text,
+  buttonClasses,
+  textClasses,
+  loading,
+}: Props) => {
   return (
     <TouchableOpacity
+      disabled={loading}
       onPress={handlePress}
       className={classNames(
-        `p-4 rounded-lg bg-secondary-flow  ${buttonClasses}`
+        `p-4 rounded-lg bg-secondary-flow  ${buttonClasses}`,
+        {
+          "opacity-50": loading,
+        }
       )}
     >
       <Text className={`text-lg font-semibold text-center  ${textClasses}`}>
